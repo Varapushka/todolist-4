@@ -19,11 +19,12 @@ export const TodolistItem = ({title, task, date}: Props) => {
                 </div>
                 {task.length === 0 ? <span>"Тасок нет"</span> : (
                 <ul>
-                    {task.map(task => {
+                    {task.map(el => {
                         return (
-                            <li key={task.id}>
-                                <input type={"checkbox"} checked={task.isDone}/>
-                                <span>{task.title}</span>
+                            <li key={el.id}>
+                                <input type={"checkbox"} checked={el.isDone}/>
+                                <span>{el.title}</span>
+
                             </li>)
 
                     })}
