@@ -1,5 +1,9 @@
 import {Task} from "../../App.tsx";
-import {Button} from "../button/Button.tsx";
+import {Button} from "../buttons/Button/Button.tsx";
+import s from "./TodolstItem.module.css"
+import {Fragment} from "react";
+import {TaskItem} from "./taskItem/TaskItem.tsx";
+
 
 
 type Props = {
@@ -8,24 +12,34 @@ type Props = {
     date?: string
 }
 
+
+
 export const TodolistItem = ({title, task, date}: Props) => {
+
+
+
     return (
-        <>
-            <div>
-                <h3>{title}</h3>
+        <Fragment>
+            <div className={s.container}>
+
+                <h3 >{title}</h3>
                 <div>
-                    <input/>
-                    <Button title={"+"}/>
+                    <input />
+                        <Button title={"+"} variant={'primary'}/>
+
+
                 </div>
                 {task.length === 0 ? <span>"Тасок нет"</span> : (
                 <ul>
                     {task.map(el => {
                         return (
-                            <li key={el.id}>
-                                <input type={"checkbox"} checked={el.isDone}/>
-                                <span>{el.title}</span>
+                            <TaskItem
+                                task={el}
+                                onToggle={()=>(console.log('checkbox is clicked'))}
+                                onDelete={()=>(console.log('task is deleted'))}
+                            />
+                        )
 
-                            </li>)
 
                     })}
                 </ul> )}
@@ -38,7 +52,7 @@ export const TodolistItem = ({title, task, date}: Props) => {
             </div>
 
 
-        </>
+        </Fragment>
 
     )
 }

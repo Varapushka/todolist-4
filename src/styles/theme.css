@@ -1,0 +1,19 @@
+:root {
+    --bg-color: #f4f6f8;
+    --card-color: #ffffff;
+    --card-bg: #f9f9f9;
+    --text-color: #333333;
+    --primary-button: #0078d7;
+    --delete-button: #dc3545;
+    --border-color: #e0e0e0;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --card-color: #1e1e1e;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --primary-button: #2196f3;
+    --delete-button: #f44336;
+    --border-color: rgba(255,255,255,0.1);
+}
