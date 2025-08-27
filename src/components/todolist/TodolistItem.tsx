@@ -1,8 +1,10 @@
 import {Task} from "../../App.tsx";
 import {Button} from "../buttons/Button/Button.tsx";
-import s from "./TodolstItem.module.css"
+import s from "./TodolistItem.module.css";
 import {Fragment} from "react";
 import {TaskItem} from "./taskItem/TaskItem.tsx";
+import {InputForm} from "../inputForm/InputForm.tsx";
+
 
 
 
@@ -10,13 +12,16 @@ type Props = {
     title: string
     task: Task[]
     date?: string
+    DeleteTask: (id: string) => void
 }
 
 
 
-export const TodolistItem = ({title, task, date}: Props) => {
+export const TodolistItem = ({title, task, date, DeleteTask}: Props) => {
 
-
+    const DeleteTaskHandler = (id: string) => {
+        DeleteTask(id)
+    }
 
     return (
         <Fragment>
@@ -24,8 +29,11 @@ export const TodolistItem = ({title, task, date}: Props) => {
 
                 <h3 >{title}</h3>
                 <div>
-                    <input />
-                        <Button title={"+"} variant={'primary'}/>
+                    <InputForm
+                        onSubmit={(text: string) => {console.log('task added', text)}}
+                        placeholder={'Write your task...'}
+                        buttonLabel={'Add'}
+                    />
 
 
                 </div>
@@ -34,9 +42,10 @@ export const TodolistItem = ({title, task, date}: Props) => {
                     {task.map(el => {
                         return (
                             <TaskItem
+                                key={el.id}
                                 task={el}
                                 onToggle={()=>(console.log('checkbox is clicked'))}
-                                onDelete={()=>(console.log('task is deleted'))}
+                                onDelete={()=>DeleteTaskHandler(el.id)}
                             />
                         )
 
@@ -44,9 +53,9 @@ export const TodolistItem = ({title, task, date}: Props) => {
                     })}
                 </ul> )}
                 <div>
-                    <Button title={"All"}/>
-                    <Button title={"Active"}/>
-                    <Button title={"Completed"}/>
+                    <Button title={"All"} variant={"primary"}/>
+                    <Button title={"Active"} variant={"primary"}/>
+                    <Button title={"Completed"} variant={"primary"}/>
                 </div>
                 <div>{date}</div>
             </div>

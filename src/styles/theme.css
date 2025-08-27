@@ -3,9 +3,10 @@
     --card-color: #ffffff;
     --card-bg: #f9f9f9;
     --text-color: #333333;
-    --primary-button: #0078d7;
+    --primary-button: #8bc9fb;
     --delete-button: #dc3545;
     --border-color: #e0e0e0;
+    --accent-color: var(--primary-button);
 }
 
 [data-theme="dark"] {
@@ -16,4 +17,5 @@
     --primary-button: #2196f3;
     --delete-button: #f44336;
     --border-color: rgba(255,255,255,0.1);
+    --accent-color: var(--primary-button);
 }

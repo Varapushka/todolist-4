@@ -1,0 +1,44 @@
+.wrapper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+.input {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.2); /* светлый акцент */
+}
+
+.button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--accent-color);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.button:hover:not(:disabled) {
+    transform: scale(1.05);
+    background-color: color-mix(in srgb, var(--accent-color), #000 10%);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
