@@ -4,6 +4,7 @@ import s from "./TodolistItem.module.css";
 import {Fragment} from "react";
 import {TaskItem} from "./taskItem/TaskItem.tsx";
 import {InputForm} from "../inputForm/InputForm.tsx";
+import {TaskFilter} from "./TaskFilter.tsx";
 
 
 
@@ -13,14 +14,35 @@ type Props = {
     task: Task[]
     date?: string
     DeleteTask: (id: string) => void
+    changeFilter: (filter: TaskFilter) => void
+    addTask: (title: string) => void
+    toggleTask: (id: string, isDone: boolean) => void
 }
 
 
 
-export const TodolistItem = ({title, task, date, DeleteTask}: Props) => {
+export const TodolistItem = ({
+                                 title,
+                                 task,
+                                 date,
+                                 DeleteTask,
+                                 changeFilter,
+                                 addTask,
+                                 toggleTask,
+}: Props) => {
 
     const DeleteTaskHandler = (id: string) => {
         DeleteTask(id)
+    }
+
+    const changeFilterHandler = (filter: TaskFilter) => {
+        changeFilter(filter)
+    }
+    const addTaskHandler = (title: string) => {
+        addTask(title)
+    }
+    const toggleTaskHandler = (id: string, isDone: boolean) => {
+        toggleTask(id, isDone)
     }
 
     return (
@@ -30,7 +52,7 @@ export const TodolistItem = ({title, task, date, DeleteTask}: Props) => {
                 <h3 >{title}</h3>
                 <div>
                     <InputForm
-                        onSubmit={(text: string) => {console.log('task added', text)}}
+                        onSubmit={(text: string) => {addTaskHandler(text)}}
                         placeholder={'Write your task...'}
                         buttonLabel={'Add'}
                     />
@@ -44,7 +66,7 @@ export const TodolistItem = ({title, task, date, DeleteTask}: Props) => {
                             <TaskItem
                                 key={el.id}
                                 task={el}
-                                onToggle={()=>(console.log('checkbox is clicked'))}
+                                onToggle={()=>toggleTaskHandler(el.id, el.isDone)}
                                 onDelete={()=>DeleteTaskHandler(el.id)}
                             />
                         )
@@ -53,9 +75,9 @@ export const TodolistItem = ({title, task, date, DeleteTask}: Props) => {
                     })}
                 </ul> )}
                 <div>
-                    <Button title={"All"} variant={"primary"}/>
-                    <Button title={"Active"} variant={"primary"}/>
-                    <Button title={"Completed"} variant={"primary"}/>
+                    <Button title={"All"} variant={"primary"} onClick={()=>changeFilterHandler("All")}/>
+                    <Button title={"Active"} variant={"primary"} onClick={()=>changeFilterHandler("Active")}/>
+                    <Button title={"Completed"} variant={"primary"} onClick={()=>changeFilterHandler("Completed")}/>
                 </div>
                 <div>{date}</div>
             </div>

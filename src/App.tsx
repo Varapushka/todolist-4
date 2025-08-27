@@ -3,6 +3,8 @@ import {TodolistItem} from "./components/todolist/TodolistItem.tsx";
 import './styles/theme.css'
 import {ThemeToggleButton} from "./components/buttons/ThemeToggleButton/ThemeToggleButton.tsx";
 import {useState} from "react";
+import {TaskFilter} from "./components/todolist/TaskFilter.tsx";
+import {v1} from "uuid";
 
 
 
@@ -15,17 +17,41 @@ export type Task = {
 
 export const App = () => {
 
+
   const [tasks, setTasks] = useState<Task[]>([
-    { id: crypto.randomUUID(), title: 'HTML&CSS', isDone: true },
-    { id: crypto.randomUUID(), title: 'JS', isDone: true },
-    { id: crypto.randomUUID(), title: 'ReactJS', isDone: false },
-    { id: crypto.randomUUID(), title: 'Redux', isDone: false },
-    { id: crypto.randomUUID(), title: 'Typescript', isDone: false },
-    { id: crypto.randomUUID(), title: 'RTK query', isDone: false },
+    { id: v1(), title: 'HTML&CSS', isDone: true },
+    { id: v1(), title: 'JS', isDone: true },
+    { id: v1(), title: 'ReactJS', isDone: false },
+    { id: v1(), title: 'Redux', isDone: false },
+    { id: v1(), title: 'Typescript', isDone: false },
+    { id: v1(), title: 'RTK query', isDone: false },
   ])
+
+    const [filter, setFilter] = useState<TaskFilter>('All')
+
+    let filteredTasks: Task[] = tasks
+
+    if (filter === 'All') {filteredTasks = tasks}
+
+    if (filter === 'Active') {filteredTasks = tasks.filter(task => !task.isDone)}
+
+    if (filter === 'Completed') {filteredTasks = tasks.filter(task => task.isDone)}
+
+    const changeFilter = (filter: TaskFilter) => {
+      setFilter(filter)
+    }
 
     const DeleteTask = (id: string) => {
     return setTasks(tasks.filter((task) => task.id != id))
+    }
+
+    const addTask = (title: string) => {
+      const newTask: Task = {id: v1(), title: title, isDone: false}
+      setTasks([...tasks, newTask])
+
+    }
+    const toggleTask = (id: string, isDone: boolean) => {
+     setTasks(tasks.map(el => el.id === id ? {...el, isDone: !isDone } : el))
     }
 
   return (
@@ -33,8 +59,11 @@ export const App = () => {
         <ThemeToggleButton/>
           <TodolistItem
               title={"What to learn"}
-              task={tasks}
+              task={filteredTasks}
               DeleteTask={DeleteTask}
+              changeFilter={changeFilter}
+              addTask={addTask}
+              toggleTask={toggleTask}
           />
 
 
